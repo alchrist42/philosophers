@@ -24,3 +24,7 @@ void	usleep_fix(uint64_t time)
 		usleep(1);
 }
 
+void	usleep_fix2(uint64_t time)
+{
+	usleep(time * 1000);
+}
