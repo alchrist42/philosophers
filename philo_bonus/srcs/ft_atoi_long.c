@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "philo_bonus.h"
 
 /*
 **	@brief	tests that character is space symbol (\t \n \v \r \f and space)

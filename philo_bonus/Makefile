@@ -1,8 +1,7 @@
 NAME_B		=	philo_bonus
 
-SRCS_FILES	= 	philo.c \
-				logging.c \
-				logging_utils.c \
+SRCS_FILES	= 	philo_main.c \
+				philo_fork.c \
 				inicialise.c \
 				ft_atoi_long.c \
 				utils.c
@@ -22,7 +21,7 @@ RM			=	rm -f
 
 all:		$(NAME_B)
 
-bonus:		$(NAME_B)
+bonus:		all
 
 %.o:		%.c
 			$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@

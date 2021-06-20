@@ -1,57 +1,35 @@
-#include "philo.h"
+#include "philo_bonus.h"
 
-int	parcing(int argc, char **argv)
+void	parcing(t_param *p, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
-		return (1);
-	g_p.cnt_enable = (argc == 6);
-	if (ft_atoi_long(argv[1], &g_p.number) || ft_atoi_long(argv[2], &g_p.tt_die)
-		|| ft_atoi_long(argv[3], &g_p.tt_eat)
-		|| ft_atoi_long(argv[4], &g_p.tt_sleep)
-		|| (g_p.cnt_enable && ft_atoi_long(argv[5], &g_p.cnt_eats)))
-		return (1);
-	if (!g_p.number || (g_p.cnt_enable && !g_p.cnt_eats))
-		return (1);
-	return (0);
+		exit (1);
+	p->cnt_enable = (argc == 6);
+	if (ft_atoi_long(argv[1], &p->number) || ft_atoi_long(argv[2], &p->tt_die)
+		|| ft_atoi_long(argv[3], &p->tt_eat)
+		|| ft_atoi_long(argv[4], &p->tt_sleep)
+		|| (p->cnt_enable && ft_atoi_long(argv[5], &p->cnt_eats)))
+		exit (1);
+	if (!p->number || (p->cnt_enable && !p->cnt_eats))
+		exit (1);
 }
 
-int	inicialise_params(void)
+void	inicialise_params(t_param *p)
 {
-	uint64_t	i;
-
-	g_p.msg_i = 0;
-	g_p.well_fed = 0;
-	g_p.print_time = 0;
-	g_p.philo = malloc(sizeof(*g_p.philo) * g_p.number);
-	if (!g_p.philo)
-		return (1);
-	g_p.mtx = malloc(sizeof(*g_p.mtx) * g_p.number);
-	if (!g_p.mtx)
-		return (1);
-	i = 0;
-	while (i < g_p.number)
-		if (pthread_mutex_init(&g_p.mtx[i++], NULL))
-			return (1);
-	if (pthread_mutex_init(&g_p.mtx_msg, NULL)
-		|| pthread_mutex_init(&g_p.mtx_out, NULL))
-		return (1);
-	return (0);
-}
-
-void	inicialise_phils(void)
-{
-	uint64_t	i;
-
-	i = 0;
-	while (i < g_p.number)
-	{
-		g_p.philo[i].pos = i + 1;
-		g_p.philo[i].eat_count = 0;
-		if (i == 0)
-			g_p.philo[i].lfork = &g_p.mtx[g_p.number - 1];
-		else
-			g_p.philo[i].lfork = &g_p.mtx[i - 1];
-		g_p.philo[i].rfork = &g_p.mtx[i];
-		i++;
-	}
+	sem_unlink("forks");
+	sem_unlink("out_msg");
+	sem_unlink("both_fork");
+	p->forks = sem_open("forks", O_CREAT, S_IRWXU, p->number);
+	p->out_msg = sem_open("out_msg", O_CREAT, S_IRWXU, p->number);
+	p->both_fork = sem_open("both_fork", O_CREAT, S_IRWXU, p->number);
+	if (p->forks == SEM_FAILED || p->out_msg == SEM_FAILED
+		|| p->both_fork == SEM_FAILED)
+		exit(1);
+	p->p_ind = 0;
+	p->philo.pos = 1;
+	p->philo.eat_count = 0;
+	p->well_fed = 0;
+	p->pid = malloc(sizeof(*p->pid) * p->number);
+	if (!p->pid)
+		exit (1);
 }
