@@ -17,7 +17,7 @@ void	run_forks(t_param *p)
 	{
 		p->pid[p->philo.pos - 1] = fork();
 		if (p->pid[p->philo.pos - 1]) // father
-			p->p_ind++;
+			p->philo.pos++;
 		else
 		{
 			child_life(p);

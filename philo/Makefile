@@ -1,5 +1,4 @@
 NAME		=	philo
-NAME_B		=	philo_bonus
 
 SRCS_FILES	= 	philo.c \
 				logging.c \

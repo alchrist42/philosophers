@@ -64,7 +64,8 @@ void		observer_waiter(t_param *p);
 
 // philo_fork
 void		child_life(t_param *p);
-void		*philo_life(void *param);
+void		*philo_birth(void *param);
+void		philo_loop(t_param *p, t_philo *philo);
 
 // inicialise
 void		parcing(t_param *p, int argc, char **argv);

@@ -36,6 +36,7 @@ typedef struct s_philo
 	uint64_t		birth;
 	uint64_t		last_eat;
 	uint64_t		eat_count;
+	void			*p;
 }					t_philo;
 
 typedef struct s_param
@@ -57,18 +58,16 @@ typedef struct s_param
 	size_t			msg_i;
 }	t_param;
 
-t_param	g_p;
-
 // philo1
 int			main(int argc, char **argv);
-int			run_philo_treads(void);
+int			run_philo_treads(t_param *p);
 void		*philo_life(void *philosoph);
-void		take_forks(t_philo *philo);
+void		take_forks(t_param *p, t_philo *philo);
 
 // inicialise
-int			parcing(int argc, char **argv);
-int			inicialise_params(void);
-void		inicialise_phils(void);
+int			parcing(t_param *p, int argc, char **argv);
+int			inicialise_params(t_param *p);
+void		inicialise_phils(t_param *p);
 
 //utils
 uint64_t	get_time(void);
@@ -76,9 +75,9 @@ void		usleep_fix(uint64_t time);
 void		usleep_fix2(uint64_t time);
 
 //logging
-void		*observer_waiter(void *msg);
-int			ft_append_msg(uint64_t tm, int pos, char *clr, char *msg);
-int			print_buffer(bool lock_msg);
+void		*observer_waiter(void *param);
+int			ft_append_msg(uint64_t tm, t_philo *philo, char *clr, char *msg);
+int			print_buffer(t_param *p, bool lock_msg);
 
 //logging_utils
 char		*ft_strdup(const char *s1);
