@@ -8,22 +8,20 @@
 # include <stdbool.h>
 # include <stdio.h>
 
-# define LFORK  " has taken a left fork"
-# define RFORK  " has taken a right fork"
-# define RLFORK  " release a left fork"
-# define RRFORK  " release a right fork"
+# define LFORK	" has taken a left fork"
+# define RFORK	" has taken a right fork"
 # define EAT	" is eating"
 # define SLEEP	" is sleeping"
 # define THINK	" is thinking"
 # define DIE	" died"
 
-# define COLORED	0
-# define STND "\033[0m"
-# define G "\033[32m"
-# define Y "\033[33m"
-# define B "\033[35m"
-# define M "\033[36m"
-# define RB "\033[1;31m"
+# define COLORED	1
+# define STND		"\033[0m"
+# define G			"\033[32m"
+# define Y			"\033[33m"
+# define B			"\033[35m"
+# define M			"\033[36m"
+# define RB 		"\033[1;31m"
 
 # define BUF 1048576
 
