@@ -31,23 +31,23 @@ void	*observer_waiter(void *param)
 	t_param		*p;
 
 	p = (t_param *)param;
-	while (!p->cnt_enable || p->well_fed < p->number)
+	while (!usleep(2000) && (!p->cnt_enable || p->well_fed < p->number))
 	{
 		tm = get_time();
 		i = 0;
 		while (i < p->number)
 		{
-			if (tm - p->philo[i++].last_eat > p->tt_die)
+			if (tm - p->philo[i].last_eat > p->tt_die)
 			{
 				pthread_mutex_lock(&p->mtx_msg);
-				ft_append_msg(tm - p->philo[i - 1].birth, p->philo + i - 1, RB, DIE);
+				ft_append_msg(tm - p->philo[i].birth, p->philo + i, RB, DIE);
 				print_buffer(p, 0);
 				return (NULL);
 			}
+			i++;
 		}
-		if (p->msg_i > BUF * 0.9 || (p->msg_i && tm - p->print_time > 100))
+		if (p->msg_i > BUF / 2 || (p->msg_i && tm - p->print_time > 100))
 			print_buffer(p, 1);
-		usleep(2000);
 	}
 	print_buffer(p, 1);
 	return (NULL);
@@ -56,7 +56,7 @@ void	*observer_waiter(void *param)
 int	ft_append_msg(uint64_t tm, t_philo *philo, char *clr, char *msg)
 {
 	char	*temp_s;
-	t_param *p;
+	t_param	*p;
 
 	p = (t_param *)philo->p;
 	if (!(msg == DIE))

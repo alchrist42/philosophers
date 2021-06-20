@@ -14,10 +14,3 @@ uint64_t	get_time(void)
 	gettimeofday(&tm, NULL);
 	return (tm.tv_sec * 1000 + tm.tv_usec / 1000);
 }
-
-void	print_msg(t_param *p, uint64_t tm, size_t pos, char *msg)
-{
-	sem_wait(p->out_msg);
-	printf("%llu %zu %s\n", tm, pos, msg);
-	sem_post(p->out_msg);
-}

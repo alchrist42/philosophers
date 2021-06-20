@@ -76,6 +76,5 @@ void	take_forks(t_param *p, t_philo *philo)
 	}
 	if (get_time() - philo->last_eat < p->tt_die)
 		ft_append_msg(get_time() - philo->birth, philo, G, EAT);
-	
 	philo->last_eat = get_time();
 }

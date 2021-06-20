@@ -17,7 +17,7 @@
 # define THINK	" is thinking"
 # define DIE	" died"
 
-# define COLORED	1
+# define COLORED	0
 # define STND "\033[0m"
 # define G "\033[32m"
 # define Y "\033[33m"
@@ -25,7 +25,7 @@
 # define M "\033[36m"
 # define RB "\033[1;31m"
 
-# define BUF 262144
+# define BUF 1048576
 
 typedef struct s_philo
 {

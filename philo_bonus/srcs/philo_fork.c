@@ -6,17 +6,16 @@ void	child_life(t_param *p)
 
 	if (pthread_create(&p->philo.trd, NULL, philo_birth, (void *)p))
 		exit (2);
-
 	while (true)
 	{
 		usleep(TIMEOUT_CHECKING);
 		tm = get_time();
 		if (tm - p->philo.last_eat > p->tt_die)
-			{
-				sem_wait(p->out_msg);
-				printf("%llu %zu %s\n", tm - p->philo.birth, p->philo.pos, DIE);
-				exit (1);
-			}
+		{
+			sem_wait(p->out_msg);
+			print_msg2(p, tm - p->philo.birth, RED, DIE);
+			exit (1);
+		}
 		if (p->cnt_enable && p->philo.eat_count >= p->cnt_eats)
 			exit(0);
 	}
@@ -38,14 +37,14 @@ void	philo_loop(t_param *p, t_philo *philo)
 {
 	sem_wait(p->both_fork);
 	sem_wait(p->forks);
-	print_msg(p, get_time() - philo->birth, philo->pos, FORK);
+	print_msg2(p, get_time() - philo->birth, GREEN, FORK);
 	sem_wait(p->forks);
 	sem_post(p->both_fork);
-	print_msg(p, get_time() - philo->birth, philo->pos, FORK);
+	print_msg2(p, get_time() - philo->birth, GREEN, FORK);
 	if (get_time() - philo->last_eat < p->tt_die)
 	{
 		philo->last_eat = get_time();
-		print_msg(p, philo->last_eat - philo->birth, philo->pos, EAT);
+		print_msg2(p, philo->last_eat - philo->birth, YELLOW, EAT);
 	}
 	else
 		usleep(p->tt_die * 1000);
@@ -54,7 +53,8 @@ void	philo_loop(t_param *p, t_philo *philo)
 	sem_post(p->forks);
 	sem_post(p->forks);
 	philo->eat_count++;
-	print_msg(p, get_time() - philo->birth, philo->pos, SLEEP);
+	print_msg2(p, get_time() - philo->birth, BLUE, SLEEP);
 	while (get_time() - philo->last_eat < p->tt_eat + p->tt_sleep)
 		usleep(300);
+	print_msg2(p, get_time() - philo->birth, PURPLE, THINK);
 }

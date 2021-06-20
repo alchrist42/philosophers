@@ -4,6 +4,7 @@ SRCS_FILES	= 	philo_main.c \
 				philo_fork.c \
 				inicialise.c \
 				ft_atoi_long.c \
+				out_msg.c \
 				utils.c
 
 

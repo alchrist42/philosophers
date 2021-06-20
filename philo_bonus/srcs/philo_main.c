@@ -16,7 +16,7 @@ void	run_forks(t_param *p)
 	while (p->philo.pos <= p->number)
 	{
 		p->pid[p->philo.pos - 1] = fork();
-		if (p->pid[p->philo.pos - 1]) // father
+		if (p->pid[p->philo.pos - 1])
 			p->philo.pos++;
 		else
 		{
@@ -31,7 +31,7 @@ void	observer_waiter(t_param *p)
 {
 	size_t	i;
 	int		ret_status;
-	
+
 	i = 0;
 	while (p->well_fed < p->number)
 	{
